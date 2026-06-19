@@ -1,80 +1,229 @@
-% =============================================================================
-%  Pre-filled BibTeX entries for citations that recur across the released
-%  exam questions. Add your own as needed.
-% =============================================================================
 
-% --- Meta-Property Graphs (Lectures 3 and 8) ---
-@inproceedings{sadoughi2025mpg,
-    author    = {Sadoughi, Sepehr and Yakovets, Nikolay and Fletcher, George},
-    title     = {Breaking down the data-metadata barrier for effective
-                 Property Graph data management},
-    booktitle = {Proceedings of the 28th International Conference on Extending
-                 Database Technology (EDBT)},
-    year      = {2025},
+@article{wang_survey_2024,
+	title = {A {Survey} on {Large} {Language} {Model} based {Autonomous} {Agents}},
+	volume = {18},
+	issn = {2095-2228, 2095-2236},
+	url = {http://arxiv.org/abs/2308.11432},
+	doi = {10.1007/s11704-024-40231-1},
+	abstract = {Autonomous agents have long been a prominent research focus in both academic and industry communities. Previous research in this field often focuses on training agents with limited knowledge within isolated environments, which diverges significantly from human learning processes, and thus makes the agents hard to achieve human-like decisions. Recently, through the acquisition of vast amounts of web knowledge, large language models (LLMs) have demonstrated remarkable potential in achieving human-level intelligence. This has sparked an upsurge in studies investigating LLM-based autonomous agents. In this paper, we present a comprehensive survey of these studies, delivering a systematic review of the field of LLM-based autonomous agents from a holistic perspective. More specifically, we first discuss the construction of LLM-based autonomous agents, for which we propose a unified framework that encompasses a majority of the previous work. Then, we present a comprehensive overview of the diverse applications of LLM-based autonomous agents in the fields of social science, natural science, and engineering. Finally, we delve into the evaluation strategies commonly used for LLM-based autonomous agents. Based on the previous studies, we also present several challenges and future directions in this field. To keep track of this field and continuously update our survey, we maintain a repository of relevant references at https://github.com/Paitesanshi/LLM-Agent-Survey.},
+	number = {6},
+	urldate = {2026-06-19},
+	journal = {Frontiers of Computer Science},
+	author = {Wang, Lei and Ma, Chen and Feng, Xueyang and Zhang, Zeyu and Yang, Hao and Zhang, Jingsen and Chen, Zhiyuan and Tang, Jiakai and Chen, Xu and Lin, Yankai and Zhao, Wayne Xin and Wei, Zhewei and Wen, Ji-Rong},
+	month = dec,
+	year = {2024},
+	note = {arXiv:2308.11432 [cs.AI]},
+	keywords = {Computer Science - Artificial Intelligence, Computer Science - Computation and Language},
+	pages = {186345},
 }
 
-% --- Reification (Lectures 2, 3, 8) ---
-@inproceedings{guarino2018reification,
-    author    = {Guarino, Nicola and Sales, Tiago Prince and Guizzardi, Giancarlo},
-    title     = {Reification and Truthmaking Patterns},
-    booktitle = {Conceptual Modeling --- ER 2018},
-    year      = {2018},
-    publisher = {Springer},
+@misc{lewis_retrieval-augmented_2021,
+	title = {Retrieval-{Augmented} {Generation} for {Knowledge}-{Intensive} {NLP} {Tasks}},
+	url = {http://arxiv.org/abs/2005.11401},
+	doi = {10.48550/arXiv.2005.11401},
+	abstract = {Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when fine-tuned on downstream NLP tasks. However, their ability to access and precisely manipulate knowledge is still limited, and hence on knowledge-intensive tasks, their performance lags behind task-specific architectures. Additionally, providing provenance for their decisions and updating their world knowledge remain open research problems. Pre-trained models with a differentiable access mechanism to explicit non-parametric memory can overcome this issue, but have so far been only investigated for extractive downstream tasks. We explore a general-purpose fine-tuning recipe for retrieval-augmented generation (RAG) -- models which combine pre-trained parametric and non-parametric memory for language generation. We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We compare two RAG formulations, one which conditions on the same retrieved passages across the whole generated sequence, the other can use different passages per token. We fine-tune and evaluate our models on a wide range of knowledge-intensive NLP tasks and set the state-of-the-art on three open domain QA tasks, outperforming parametric seq2seq models and task-specific retrieve-and-extract architectures. For language generation tasks, we find that RAG models generate more specific, diverse and factual language than a state-of-the-art parametric-only seq2seq baseline.},
+	urldate = {2026-06-19},
+	publisher = {arXiv},
+	author = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and Petroni, Fabio and Karpukhin, Vladimir and Goyal, Naman and Küttler, Heinrich and Lewis, Mike and Yih, Wen-tau and Rocktäschel, Tim and Riedel, Sebastian and Kiela, Douwe},
+	month = apr,
+	year = {2021},
+	note = {arXiv:2005.11401 [cs.CL]},
+	keywords = {Computer Science - Computation and Language, Computer Science - Machine Learning},
 }
 
-% --- E-commerce KG / Enterprise KG (Lecture 5) ---
-@book{sequeda2021enterprise,
-    author    = {Sequeda, Juan F. and Lassila, Ora},
-    title     = {Designing and Building Enterprise Knowledge Graphs},
-    publisher = {Morgan \& Claypool},
-    year      = {2021},
+@article{hernandez_reifying_nodate,
+	title = {Reifying {RDF}: {What} {Works} {Well} {With} {Wikidata}?},
+	abstract = {In this paper, we compare various options for reifying RDF triples. We are motivated by the goal of representing Wikidata as RDF, which would allow legacy Semantic Web languages, techniques and tools – for example, SPARQL engines – to be used for Wikidata. However, Wikidata annotates statements with qualiﬁers and references, which require some notion of reiﬁcation to model in RDF. We thus investigate four such options: (1) standard reiﬁcation, (2) n-ary relations, (3) singleton properties, and (4) named graphs. Taking a recent dump of Wikidata, we generate the four RDF datasets pertaining to each model and discuss high-level aspects relating to data sizes, etc. To empirically compare the eﬀect of the diﬀerent models on query times, we collect a set of benchmark queries with four model-speciﬁc versions of each query. We present the results of running these queries against ﬁve popular SPARQL implementations: 4store, BlazeGraph, GraphDB, Jena TDB and Virtuoso.},
+	language = {en},
+	author = {Hernandez, Daniel and Hogan, Aidan and Kroetzsch, Markus},
 }
 
-% --- Identity (Lecture 7) ---
-@misc{cameron2005laws,
-    author = {Cameron, Kim},
-    title  = {The Laws of Identity},
-    year   = {2005},
-    note   = {Microsoft Whitepaper},
+@misc{noauthor_rdf_nodate,
+	title = {{RDF} 1.1 {Concepts} and {Abstract} {Syntax}},
+	url = {https://www.w3.org/TR/rdf11-concepts/#data-model},
+	urldate = {2026-06-19},
 }
 
-@article{bopp2019coerciveness,
-    author  = {Bopp, Christopher and Voida, Amy},
-    title   = {The Coerciveness of the Primary Key:
-               Infrastructure Problems in Human Services Work},
-    journal = {Proc. ACM Hum.-Comput. Interact.},
-    year    = {2019},
+@article{cyganiak_rdf_2014,
+	title = {{RDF} 1.1 {Concepts} and {Abstract} {Syntax}},
+	journal = {W3C Proposed Recommendation},
+	author = {Cyganiak, Richard and Hyland-Wood, David and Lanthaler, Markus},
+	month = jan,
+	year = {2014},
 }
 
-@article{martin2021exclusion,
-    author  = {Martin, Aaron and Taylor, Linnet},
-    title   = {Exclusion and inclusion in identification:
-               regulation, displacement and data justice},
-    journal = {Information Technology for Development},
-    year    = {2021},
+@misc{noauthor_rdf_nodate-1,
+	title = {{RDF} 1.1 {Concepts} and {Abstract} {Syntax}},
+	url = {https://www.researchgate.net/publication/259671336_RDF_11_Concepts_and_Abstract_Syntax},
+	urldate = {2026-06-19},
 }
 
-@article{gilman2022double,
-    author  = {Gilman, Michele E.},
-    title   = {Me, Myself, and My Digital Double:
-               Extending Sara Greene's Stealing (Identity) From the Poor},
-    journal = {Minnesota Law Review},
-    year    = {2022},
+@misc{noauthor_rdf_nodate-2,
+	title = {{RDF} 1.1 {Concepts} and {Abstract} {Syntax}},
+	url = {https://www.w3.org/TR/rdf11-concepts/},
+	urldate = {2026-06-19},
 }
 
-% --- General KG / data philosophy (Lectures 2, 6) ---
-@article{hogan2021kg,
-    author  = {Hogan, Aidan and others},
-    title   = {Knowledge Graphs},
-    journal = {ACM Computing Surveys},
-    year    = {2021},
+@inproceedings{guarino_reification_2018,
+	address = {Cham},
+	title = {Reification and {Truthmaking} {Patterns}},
+	isbn = {978-3-030-00847-5},
+	doi = {10.1007/978-3-030-00847-5_13},
+	abstract = {Reification is a standard technique in conceptual modeling, which consists of including in the domain of discourse entities that may otherwise be hidden or implicit. However, deciding what should be reified is not always easy. Recent work on formal ontology offers us a simple answer: put in the domain of discourse those entities that are responsible for the (alleged) truth of our propositions. These are called truthmakers. Re-visiting previous work, we propose in this paper a systematic analysis of truthmaking patterns for properties and relations based on the ontological nature of their truthmakers. Truthmaking patterns will be presented as generalization of reification patterns, accounting for the fact that, in some cases, we do not reify a property or a relationship directly, but we rather reify its truthmakers.},
+	language = {en},
+	booktitle = {Conceptual {Modeling}},
+	publisher = {Springer International Publishing},
+	author = {Guarino, Nicola and Sales, Tiago Prince and Guizzardi, Giancarlo},
+	editor = {Trujillo, Juan C. and Davis, Karen C. and Du, Xiaoyong and Li, Zhanhuai and Ling, Tok Wang and Li, Guoliang and Lee, Mong Li},
+	year = {2018},
+	keywords = {Ontology-driven conceptual modeling, Reification},
+	pages = {151--165},
 }
 
-@article{farrell2025aiculture,
-    author  = {Farrell, Henry and Gopnik, Alison and Shalizi, Cosma and Evans, James},
-    title   = {Large AI models are cultural and social technologies},
-    journal = {Science},
-    volume  = {387},
-    pages   = {1153--1156},
-    year    = {2025},
+@inproceedings{angles_property_2018,
+	title = {The {Property} {Graph} {Database} {Model}},
+	url = {https://api.semanticscholar.org/CorpusID:43977243},
+	booktitle = {Alberto {Mendelzon} {Workshop} on {Foundations} of {Data} {Management}},
+	author = {Angles, Renzo},
+	year = {2018},
+}
+
+@misc{noauthor_notitle_nodate,
+}
+
+@inproceedings{angles_property_2018-1,
+	title = {The {Property} {Graph} {Database} {Model}},
+	url = {https://api.semanticscholar.org/CorpusID:43977243},
+	booktitle = {Alberto {Mendelzon} {Workshop} on {Foundations} of {Data} {Management}},
+	author = {Angles, Renzo},
+	year = {2018},
+}
+
+@misc{noauthor_property_nodate,
+	title = {The {Property} {Graph} {Database} {Model} - researchr publication},
+	url = {https://researchr.org/publication/Angles18},
+	urldate = {2026-06-18},
+}
+
+@misc{noauthor_pdf_nodate,
+	title = {[{PDF}] {The} {Property} {Graph} {Database} {Model} {\textbar} {Semantic} {Scholar}},
+	url = {https://www.semanticscholar.org/paper/The-Property-Graph-Database-Model-Angles/91d6e8ba5dd90b02fe3bd870b19da13a6167af53},
+	urldate = {2026-06-18},
+}
+
+@misc{noauthor_2026_nodate,
+	title = {2026 {Connectivity} {Benchmark} {Report}},
+	url = {https://www.mulesoft.com/lp/reports/connectivity-benchmark},
+	abstract = {Discover 2026 digital transformation insights on AI trends, integration, automation productivity, and API revenue from global IT leaders.},
+	language = {en},
+	urldate = {2026-06-18},
+	journal = {MuleSoft},
+}
+
+@misc{peng_graph_2024,
+	title = {Graph {Retrieval}-{Augmented} {Generation}: {A} {Survey}},
+	shorttitle = {Graph {Retrieval}-{Augmented} {Generation}},
+	url = {http://arxiv.org/abs/2408.08921},
+	doi = {10.48550/arXiv.2408.08921},
+	abstract = {Recently, Retrieval-Augmented Generation (RAG) has achieved remarkable success in addressing the challenges of Large Language Models (LLMs) without necessitating retraining. By referencing an external knowledge base, RAG refines LLM outputs, effectively mitigating issues such as ``hallucination'', lack of domain-specific knowledge, and outdated information. However, the complex structure of relationships among different entities in databases presents challenges for RAG systems. In response, GraphRAG leverages structural information across entities to enable more precise and comprehensive retrieval, capturing relational knowledge and facilitating more accurate, context-aware responses. Given the novelty and potential of GraphRAG, a systematic review of current technologies is imperative. This paper provides the first comprehensive overview of GraphRAG methodologies. We formalize the GraphRAG workflow, encompassing Graph-Based Indexing, Graph-Guided Retrieval, and Graph-Enhanced Generation. We then outline the core technologies and training methods at each stage. Additionally, we examine downstream tasks, application domains, evaluation methodologies, and industrial use cases of GraphRAG. Finally, we explore future research directions to inspire further inquiries and advance progress in the field. In order to track recent progress in this field, we set up a repository at {\textbackslash}url\{https://github.com/pengboci/GraphRAG-Survey\}.},
+	urldate = {2026-06-18},
+	publisher = {arXiv},
+	author = {Peng, Boci and Zhu, Yun and Liu, Yongchao and Bo, Xiaohe and Shi, Haizhou and Hong, Chuntao and Zhang, Yan and Tang, Siliang},
+	month = sep,
+	year = {2024},
+	note = {arXiv:2408.08921 [cs.AI]},
+	keywords = {Computer Science - Artificial Intelligence, Computer Science - Computation and Language, Computer Science - Information Retrieval},
+}
+
+@misc{edge_local_2025,
+	title = {From {Local} to {Global}: {A} {Graph} {RAG} {Approach} to {Query}-{Focused} {Summarization}},
+	shorttitle = {From {Local} to {Global}},
+	url = {http://arxiv.org/abs/2404.16130},
+	doi = {10.48550/arXiv.2404.16130},
+	abstract = {The use of retrieval-augmented generation (RAG) to retrieve relevant information from an external knowledge source enables large language models (LLMs) to answer questions over private and/or previously unseen document collections. However, RAG fails on global questions directed at an entire text corpus, such as "What are the main themes in the dataset?", since this is inherently a query-focused summarization (QFS) task, rather than an explicit retrieval task. Prior QFS methods, meanwhile, do not scale to the quantities of text indexed by typical RAG systems. To combine the strengths of these contrasting methods, we propose GraphRAG, a graph-based approach to question answering over private text corpora that scales with both the generality of user questions and the quantity of source text. Our approach uses an LLM to build a graph index in two stages: first, to derive an entity knowledge graph from the source documents, then to pregenerate community summaries for all groups of closely related entities. Given a question, each community summary is used to generate a partial response, before all partial responses are again summarized in a final response to the user. For a class of global sensemaking questions over datasets in the 1 million token range, we show that GraphRAG leads to substantial improvements over a conventional RAG baseline for both the comprehensiveness and diversity of generated answers.},
+	urldate = {2026-06-18},
+	publisher = {arXiv},
+	author = {Edge, Darren and Trinh, Ha and Cheng, Newman and Bradley, Joshua and Chao, Alex and Mody, Apurva and Truitt, Steven and Metropolitansky, Dasha and Ness, Robert Osazuwa and Larson, Jonathan},
+	month = feb,
+	year = {2025},
+	note = {arXiv:2404.16130 [cs.CL]},
+	keywords = {Computer Science - Artificial Intelligence, Computer Science - Computation and Language, Computer Science - Information Retrieval},
+}
+
+@misc{han_retrieval-augmented_2025,
+	title = {Retrieval-{Augmented} {Generation} with {Graphs} ({GraphRAG})},
+	url = {http://arxiv.org/abs/2501.00309},
+	doi = {10.48550/arXiv.2501.00309},
+	abstract = {Retrieval-augmented generation (RAG) is a powerful technique that enhances downstream task execution by retrieving additional information, such as knowledge, skills, and tools from external sources. Graph, by its intrinsic "nodes connected by edges" nature, encodes massive heterogeneous and relational information, making it a golden resource for RAG in tremendous real-world applications. As a result, we have recently witnessed increasing attention on equipping RAG with Graph, i.e., GraphRAG. However, unlike conventional RAG, where the retriever, generator, and external data sources can be uniformly designed in the neural-embedding space, the uniqueness of graph-structured data, such as diverse-formatted and domain-specific relational knowledge, poses unique and significant challenges when designing GraphRAG for different domains. Given the broad applicability, the associated design challenges, and the recent surge in GraphRAG, a systematic and up-to-date survey of its key concepts and techniques is urgently desired. Following this motivation, we present a comprehensive and up-to-date survey on GraphRAG. Our survey first proposes a holistic GraphRAG framework by defining its key components, including query processor, retriever, organizer, generator, and data source. Furthermore, recognizing that graphs in different domains exhibit distinct relational patterns and require dedicated designs, we review GraphRAG techniques uniquely tailored to each domain. Finally, we discuss research challenges and brainstorm directions to inspire cross-disciplinary opportunities. Our survey repository is publicly maintained at https://github.com/Graph-RAG/GraphRAG/.},
+	urldate = {2026-06-18},
+	publisher = {arXiv},
+	author = {Han, Haoyu and Wang, Yu and Shomer, Harry and Guo, Kai and Ding, Jiayuan and Lei, Yongjia and Halappanavar, Mahantesh and Rossi, Ryan A. and Mukherjee, Subhabrata and Tang, Xianfeng and He, Qi and Hua, Zhigang and Long, Bo and Zhao, Tong and Shah, Neil and Javari, Amin and Xia, Yinglong and Tang, Jiliang},
+	month = jan,
+	year = {2025},
+	note = {arXiv:2501.00309 [cs.IR]},
+	keywords = {Computer Science - Computation and Language, Computer Science - Information Retrieval, Computer Science - Machine Learning},
+}
+
+@article{angles_survey_2008,
+	title = {Survey of graph database models},
+	volume = {40},
+	issn = {0360-0300},
+	url = {https://dl.acm.org/doi/10.1145/1322432.1322433},
+	doi = {10.1145/1322432.1322433},
+	abstract = {Graph database models can be defined as those in which data structures for the schema and instances are modeled as graphs or generalizations of them, and data manipulation is expressed by graph-oriented operations and type constructors. These models took off in the eighties and early nineties alongside object-oriented models. Their influence gradually died out with the emergence of other database models, in particular geographical, spatial, semistructured, and XML. Recently, the need to manage information with graph-like nature has reestablished the relevance of this area. The main objective of this survey is to present the work that has been conducted in the area of graph database modeling, concentrating on data structures, query languages, and integrity constraints.},
+	number = {1},
+	urldate = {2026-06-18},
+	journal = {ACM Computing Surveys (CSUR)},
+	author = {Angles, Renzo and Gutierrez, Claudio},
+	month = feb,
+	year = {2008},
+	pages = {1:1--1:39},
+}
+
+@article{angles_rdf_nodate,
+	title = {{RDF} and {Property} {Graphs} {Interoperability}: {Status} and {Issues}},
+	abstract = {RDF and Property Graph databases are two approaches for data management that are based on modeling, storing and querying graph-like data. In this paper, we present a short study about the interoperability between these approaches. We review the current solutions to the problem, identify their features, and discuss the inherent issues.},
+	language = {en},
+	author = {Angles, Renzo and Thakkar, Harsh and Tomaszuk, Dominik},
+}
+
+@article{miller_graph_2013,
+	title = {Graph {Database} {Applications} and {Concepts} with {Neo4j}},
+	url = {https://aisel.aisnet.org/sais2013/24},
+	journal = {SAIS 2013Proceedings},
+	author = {Miller, Justin},
+	month = may,
+	year = {2013},
+}
+
+@misc{angles_foundations_2017,
+	title = {Foundations of {Modern} {Query} {Languages} for {Graph} {Databases}},
+	url = {http://arxiv.org/abs/1610.06264},
+	doi = {10.48550/arXiv.1610.06264},
+	abstract = {We survey foundational features underlying modern graph query languages. We first discuss two popular graph data models: edge-labelled graphs, where nodes are connected by directed, labelled edges; and property graphs, where nodes and edges can further have attributes. Next we discuss the two most fundamental graph querying functionalities: graph patterns and navigational expressions. We start with graph patterns, in which a graph-structured query is matched against the data. Thereafter we discuss navigational expressions, in which patterns can be matched recursively against the graph to navigate paths of arbitrary length; we give an overview of what kinds of expressions have been proposed, and how they can be combined with graph patterns. We also discuss several semantics under which queries using the previous features can be evaluated, what effects the selection of features and semantics has on complexity, and offer examples of such features in three modern languages that are used to query graphs: SPARQL, Cypher and Gremlin. We conclude by discussing the importance of formalisation for graph query languages; a summary of what is known about SPARQL, Cypher and Gremlin in terms of expressivity and complexity; and an outline of possible future directions for the area.},
+	urldate = {2026-06-18},
+	publisher = {arXiv},
+	author = {Angles, Renzo and Arenas, Marcelo and Barcelo, Pablo and Hogan, Aidan and Reutter, Juan and Vrgoc, Domagoj},
+	month = jun,
+	year = {2017},
+	note = {arXiv:1610.06264 [cs.DB]},
+	keywords = {Computer Science - Databases},
+}
+
+@article{hogan_knowledge_2022,
+	title = {Knowledge {Graphs}},
+	volume = {54},
+	issn = {0360-0300, 1557-7341},
+	url = {http://arxiv.org/abs/2003.02320},
+	doi = {10.1145/3447772},
+	abstract = {In this paper we provide a comprehensive introduction to knowledge graphs, which have recently garnered significant attention from both industry and academia in scenarios that require exploiting diverse, dynamic, large-scale collections of data. After some opening remarks, we motivate and contrast various graph-based data models and query languages that are used for knowledge graphs. We discuss the roles of schema, identity, and context in knowledge graphs. We explain how knowledge can be represented and extracted using a combination of deductive and inductive techniques. We summarise methods for the creation, enrichment, quality assessment, refinement, and publication of knowledge graphs. We provide an overview of prominent open knowledge graphs and enterprise knowledge graphs, their applications, and how they use the aforementioned techniques. We conclude with high-level future research directions for knowledge graphs.},
+	number = {4},
+	urldate = {2026-06-18},
+	journal = {ACM Computing Surveys},
+	author = {Hogan, Aidan and Blomqvist, Eva and Cochez, Michael and d'Amato, Claudia and Melo, Gerard de and Gutierrez, Claudio and Gayo, José Emilio Labra and Kirrane, Sabrina and Neumaier, Sebastian and Polleres, Axel and Navigli, Roberto and Ngomo, Axel-Cyrille Ngonga and Rashid, Sabbir M. and Rula, Anisa and Schmelzeisen, Lukas and Sequeda, Juan and Staab, Steffen and Zimmermann, Antoine},
+	month = may,
+	year = {2022},
+	note = {arXiv:2003.02320 [cs.AI]},
+	keywords = {Computer Science - Artificial Intelligence, Computer Science - Databases, Computer Science - Machine Learning},
+	pages = {1--37},
 }

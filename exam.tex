@@ -18,6 +18,18 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{microtype}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes.multipart, arrows.meta}
+\newtcolorbox{topicquote}{
+    colback=white,       % Light background tint
+    colframe=white,       % No border line
+    arc=0mm,              % Square corners
+    halign=center,        % Center text inside the box
+    valign=center,
+    width=\textwidth,     % Take up full row width
+    top=1em, bottom=1em   % Padding
+}
 
 % ---- Math / symbols ---------------------------------------------------------
 \usepackage{amsmath, amssymb, amsthm}
@@ -103,7 +115,7 @@
 % =============================================================================
 \title{Take-home Final Exam \\
        \large 2AMD20 Knowledge Engineering, Q4 2025--2026}
-\author{Your Name \\ Student ID: \texttt{1234567} \\ \texttt{your.email@student.tue.nl}}
+\author{Adam Szelestey \\ Student ID: \texttt{2362783} \\ \texttt{a.szelestey@student.tue.nl}}
 \date{\today}
 
 \begin{document}

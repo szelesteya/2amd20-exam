@@ -34,4 +34,152 @@
 % formal/semi-formal definition), then provide the two required examples
 % with explicit vertex/edge labels and key-value pairs.
 
+\section{Introduction}
+
+\textit{Knowledge Graphs} (KGs) \cite{hogan_knowledge_2022, angles_survey_2008} are becoming prominent database architectures in recent years. They are often favored over more traditional, relational databases, because their ability to provide more flexibility in terms of schema and data evolution \cite{hogan_knowledge_2022, angles_survey_2008}. This characteristic is especially appealing in the current state of accelerated software developments and improving trend in integrations of data systems due to advancements in \textit{Generative AI}. Moreover, Knowledge Graphs have more intuitive data modeling language and representation by design.
+
+Property graphs (PGs) \cite{angles_property_2018} are one of the most used forms of KGs which experience increasing interest with the popularization of Neo4j \cite{miller_graph_2013} and similar enterprise applications \cite{angles_foundations_2017}. They extend the purest form of KGs the \textit{Directed edge-labeled graphs} by allowing types, \textit{property-value} sets and labels to be associated with both nodes and edges \cite{hogan_knowledge_2022}. This feature makes them even more flexible than other forms of graph databases.
+
+At the same time, the first appealing flexibility comes with costs. More flexibility means extensive space of modeling solutions and consequently extensive number of required decisions made. The collection of decisions made, when we basically abstract real-world things into a model is called \textit{Reification} \cite{guarino_reification_2018}. In standard edge-labeled graphs the process of reification comes down to adding edges and nodes whenever a new concept is introduced \cite{cyganiak_rdf_2014, hernandez_reifying_nodate}. In contrast, when dealing with PGs a concept can be represented as a label or property-value associated with an edge or node \cite{angles_rdf_nodate}. To understand this challenge in more detail we need to provide more well-reasoned and documented reification processes.
+
+This research goal is exactly that through the reification of two concepts. The first concept is a simple sentence: \textit{``The detective supposes that the butler killed the gardener''}. Here the focus will be on exploring the potential goals and a reifications will be delivered to fulfill it. On the second example, the reification process is going to be reversed: it will start from the a problem which will lay out a reification to end up with the real-world concept. Moreover, through the examples it will be briefly discussed why both mindset is important.
+
+\section{PG Reification: from concept to goals}
+
+Lets take the first example:
+
+\begin{topicquote}
+    \itshape ``The detective supposes that the butler killed the gardener.''
+\end{topicquote}
+
+When we look at the sentence, our first observation might be the lack of context. This can a representation of a record in a relevant investigation, but it might be just a sentence in a huge corpus of Columbo episodes. Therefore, the reification can also define the context around a concept its not just the tool for abstraction. If we treat it as a single sentence from a corpus it will be intuitive to think about other sentences as well and what do we know about sentences in general.
+
+A scientific study dealing with sentences is basically the syntax. Syntax is a really well studied area of research and using it the sentence can be broken down into other concepts in multiple ways. To keep it simple lets approach it from the Matrix Level which is the highest layer of sentence structure. Then, we are looking at:
+\begin{itemize}
+    \item The subject slot: The detective
+    \item The verb or predicator slot: supposes
+    \item The object slot: that the butler killed the gardener
+\end{itemize}
+
+The concept of Matrix level analyzation of sentences can lay out a structure: Subject, Verb, Object and the respected nodes of it: The detective, supposes, that the butler killed the gardener. Then the property value pairs can define certain additional details about the different main clauses. Here infinite number of property-value pairs could be defined for each node just from a syntatic perspective, lets define one for each node:
+\begin{itemize}
+    \item The detective - Head noun: "detective"
+    \item supposes - Lexical base: "suppose"
+    \item that the butler killed the gardener. - Subordinating element: "that"
+\end{itemize}
+
+To not loose all the semantical connections between these nodes we have to represent their relationship somehow. A reasonable choice is to introduce the hierarchy of the matrix form as a separate node and describe the sentence structure through edges. Then, another node will represent the complete sentence: "The detective ..." and the edges could be ITS\_SUBJECT, ITS\_VERB, ITS\_DIRECT\_OBJECT. These relationships could hold property values that are associated with the matrix-level entities, but only true in the context of the sentence. Such an example can be:
+
+\begin{itemize}
+    \item ITS\_SUBJECT - Semantic role: experiencer
+    \item ITS\_VERB - Grammatical mood: indicative
+    \item ITS\_DIRECT\_OBJECT - Factivity: non-factive
+\end{itemize}
+
+This though process resulted in the structure seen at \ref{fig:pg_reification}. This reification can yield application where the region of interest is understanding the structure of sentences. Through extension the reification could be extended to be even more representative of the grammar and combining with other language's corpus it could help understand the similarities between different languages.
+
+.\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    >=Stealth,
+    node distance=3.5cm and 4.5cm,
+    % Style for the Property Graph Nodes
+    pgnode/.style={
+        rectangle split,
+        rectangle split parts=3,
+        draw=black,
+        thick,
+        rounded corners,
+        fill=gray!5,
+        align=left,
+        font=\small\sffamily,
+        inner sep=6pt,
+        text width=4.2cm
+    },
+    % Style for Edge Labels (Properties on Edges)
+    edgeprop/.style={
+        draw=black!60,
+        fill=white,
+        font=\scriptsize\sffamily,
+        rounded corners=2pt,
+        inner sep=3pt,
+        align=left
+    }
+]
+
+    % --- NODES ---
+    
+    % Central Sentence Node
+    \node[pgnode] (sentence) {
+        \textbf{:Sentence}
+        \nodepart{second}\textit{"The detective supposes that..."}
+        \nodepart{third}id: 101\\type: "MatrixClause"
+    };
+
+    % Subject Node (Top Right)
+    \node[pgnode, above right=1cm and 3cm of sentence] (subject) {
+        \textbf{:SubjectNode}
+        \nodepart{second}\textit{"The detective"}
+        \nodepart{third}head\_noun: "detective"\\determiner: "the"
+    };
+
+    % Verb Node (Middle Right)
+    \node[pgnode, right=4.5cm of sentence] (verb) {
+        \textbf{:VerbNode}
+        \nodepart{second}\textit{"supposes"}
+        \nodepart{third}lexical\_base: "suppose"\\tense: "present"
+    };
+
+    % Object Node (Bottom Right)
+    \node[pgnode, below right=1cm and 3cm of sentence] (object) {
+        \textbf{:ObjectNode}
+        \nodepart{second}\textit{"that the butler killed..."}
+        \nodepart{third}subordinator: "that"\\clause\_type: "dependent"
+    };
+
+
+    % --- EDGES WITH PROPERTIES ---
+
+    % Edge to Subject
+    \draw[->, thick] (sentence) -- (subject) 
+        node[midway, edgeprop, above left=0.1cm] {
+            \textbf{ITS\_SUBJECT}\\
+            semantic\_role: "experiencer"
+        };
+
+    % Edge to Verb
+    \draw[->, thick] (sentence) -- (verb) 
+        node[midway, edgeprop, fill=white] {
+            \textbf{ITS\_VERB}\\
+            grammatical\_mood: "indicative"
+        };
+
+    % Edge to Object
+    \draw[->, thick] (sentence) -- (object) 
+        node[midway, edgeprop, below left=0.1cm] {
+            \textbf{ITS\_DIRECT\_OBJECT}\\
+            factivity: "non-factive"
+        };
+
+\end{tikzpicture}
+\caption{Property Graph Model of the Matrix-Level Sentence Structure.}
+\label{fig:pg_reification}
+\end{figure}
+
+\section{PG Reification: from goal to concept}
+
+A bit more practical and realistic scenario, when there is an exact use case to solve and the goal is to find the most suitable reification given the data sources. A use case I encountered was to build a \textit{RAG} \cite{lewis_retrieval-augmented_2021} system based on company knowledge base that can be later on integrated with \textit{LLM agents} \cite{wang_survey_2024}. This outlined the following requirements:
+\begin{itemize}
+    \item \textbf{Extendability}: There might be all sort of different sources integrated later on so make sure that either through the schema or the architecture support support it.
+    \item \textbf{Informativeness}: LLM agents will interact with the system so the schema should be intuitive on semantic level and easily navigable.
+    \item \textbf{Dynamic referencing}: One of the most important requirements is to ensure the provided content is grounded by reliable references. These references yield complex relationship systems and multi-hop navigating should be a first class citizen not an additional feature.
+\end{itemize}
+
+These are the exact requirements that prompt a PG Database infused RAG systems. The exact architecture was a bit more complicated then to discuss it in 2 pages, but a simplified representation was quiet like the layout of the latex language in its simplest form which is displayed on \ref{}.
+
+
+
+\section{Conclusion}
+
+
 \end{question}
