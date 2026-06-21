@@ -118,6 +118,15 @@
 \author{Adam Szelestey \\ Student ID: \texttt{2362783} \\ \texttt{a.szelestey@student.tue.nl}}
 \date{\today}
 
+% --- Custom Styling for Knowledge Engineering Exam ---
+\usepackage{enumitem} % Allows for compact algorithms and lists
+
+% Reusable, compact inline definition macro
+% Usage: \kgedef{Number}{Title} Definition text starts here...
+\newcommand{\kgedef}[2]{%
+  \par\vspace{0.5em}\noindent\textbf{Definition #1 (#2):}\quad%
+}
+
 \begin{document}
 \maketitle
 

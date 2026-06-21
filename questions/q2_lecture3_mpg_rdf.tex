@@ -189,25 +189,25 @@ When mapping backwards from MPG to standard RDF, the procedure reverses the enca
     };
 
     % Subject and Object Nodes
-    \node[pgnode, left=3.5cm of stmt] (netherlands) {
+    \node[pgnode, left=2cm of stmt] (netherlands) {
         \textbf{:FootballTeam}
         \nodepart{second}
         country: "Netherlands"
     };
-    \node[pgnode, right=3.5cm of stmt] (sweden) {
+    \node[pgnode, right=2cm of stmt] (sweden) {
         \textbf{:FootballTeam}
         \nodepart{second}
         country: "Sweden"
     };
 
     % Predicate and Metadata Nodes
-    \node[pgnode, above=2cm of stmt] (predicate) {
+    \node[pgnode, above=1.5cm of stmt] (predicate) {
         \textbf{:Property}
         \nodepart{second}
         uri: "BEAT"
     };
     
-    \node[pgnode, below=2cm of stmt] (score) {
+    \node[pgnode, below=1.5cm of stmt] (score) {
         \textbf{:Literal}
         \nodepart{second}
         value: "5-1"

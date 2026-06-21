@@ -25,6 +25,73 @@
     No explicit minimum length stated; aim for a focused 1--2 pages.%
   }
 \section{Direct mapping from reified RDF to reified MPG}
+\subsection{Introduction and Theoretical Foundation}
+
+To establish a direct mapping from standard RDF reification to Meta-Property Graphs (MPG), we must first formally define the structural characteristics of both the input space (RDF) and the target output space (MPG).
+
+\textbf{Definition 1: Standard RDF Reification (Input)} \\
+Let $G_{RDF}$ be an RDF graph containing a reified statement. In standard RDF reification, a statement is structurally represented by an identifier node $i$ of type \texttt{rdf:Statement}. This node is linked to the base elements via three core triples: $(i, \texttt{rdf:subject}, s)$, $(i, \texttt{rdf:predicate}, p)$, and $(i, \texttt{rdf:object}, o)$. Metadata attached to this statement is represented by additional triples. To ensure completeness during mapping, we distinguish between two types of metadata triples: \textit{data properties} $(i, p_d, v_d)$ where the target is a literal value, and \textit{object properties} $(i, p_o, n_o)$ where the target is another entity \cite{hernandez_reifying_nodate, noauthor_rdf_nodate, hogan_knowledge_2022}.
+
+\textbf{Definition 2: Meta-Property Graph (Output)} \\
+The target database is a Meta-Property Graph formally defined as the tuple $G_{MPG} = (N, E, P, L, \lambda, \mu, \sigma, \upsilon, \eta, \rho)$. In this structure, $N$ is the set of nodes, $E$ is the set of edges (including directed edges $E_d$), $P$ is the set of properties, and $L$ is the set of label identifiers. The model uses specific mapping functions: $\eta$ for edge topology, $\lambda$ and $\mu$ for labeling, $\sigma$ and $\upsilon$ for property assignment. Crucially, it introduces the $\rho$ function, which natively assigns a set of objects to a specific node to encapsulate a sub-structure \cite{sadoughi_meta-property_2025}.
+
+\subsection{Direct Mapping Algorithm: RDF Reification to MPG Reification}
+
+The following pseudo-code details the transformation logic to map an RDF reified statement into an MPG reified sub-structure. 
+
+\vspace{0.5em}
+\noindent\hrulefill
+\begin{flushleft}
+\textbf{Algorithm:} Map\_RDF\_to\_MPG($G_{RDF}$) \\
+\textbf{Input:} An RDF Graph $G_{RDF}$ \\
+\textbf{Output:} A Meta-Property Graph $G_{MPG} = (N, E, P, L, \lambda, \mu, \sigma, \upsilon, \eta, \rho)$
+\end{flushleft}
+
+\begin{enumerate}
+    \item \textbf{For} every statement node $i \in G_{RDF}$ of type \texttt{rdf:Statement} \textbf{do}:
+    \item \quad Extract base triples: $(i, \texttt{rdf:subject}, s)$, $(i, \texttt{rdf:predicate}, p)$, and $(i, \texttt{rdf:object}, o)$
+    \item \quad \textit{// Step 1: Map Base Nodes}
+    \item \quad Add $n_s, n_o$ to $N$
+    \item \quad \textit{// Step 2: Map Relationship Predicate}
+    \item \quad Create directed edge $e \in E_d$
+    \item \quad Set $\eta_s(e) \leftarrow n_s$ and $\eta_t(e) \leftarrow n_o$
+    \item \quad Set $p \in \mu(\lambda(e))$
+    \item \quad \textit{// Step 3: Create Meta-Node and Apply $\rho$}
+    \item \quad Create meta-node $n_i \in N$
+    \item \quad Assign $\rho(n_i) \leftarrow \{n_s, e, n_o\}$
+    \item \quad \textit{// Step 4: Attach Metadata}
+    \item \quad \textbf{For} every metadata triple $(i, p_m, target) \in G_{RDF}$ \textbf{do}:
+    \item \quad \quad \textbf{If} $target$ is a literal value $v_d$ \textbf{then}
+    \item \quad \quad \quad Create property $k \in P$ with $\upsilon(k) \leftarrow (p_m, v_d)$
+    \item \quad \quad \quad Add $k$ to $\sigma(n_i)$
+    \item \quad \quad \textbf{Else if} $target$ is an entity $n_o'$ \textbf{then}
+    \item \quad \quad \quad Create directed edge $e_o \in E_d$
+    \item \quad \quad \quad Set $\eta_s(e_o) \leftarrow n_i$ and $\eta_t(e_o) \leftarrow n_o'$
+    \item \quad \quad \quad Set $p_m \in \mu(\lambda(e_o))$
+    \item \quad \quad \textbf{End If}
+    \item \quad \textbf{End For}
+    \item \textbf{End For}
+\end{enumerate}
+\noindent\hrulefill
+\vspace{0.5em}
+
+\subsection{Explanation of the Mapping Steps}
+
+\begin{itemize}
+    \item \textbf{Step 1 (Map the Base Nodes):} We begin by identifying the statement node $i$ in $G_{RDF}$. We extract the targets of its \texttt{rdf:subject} and \texttt{rdf:object} triples, representing $s$ and $o$. We then map $s$ and $o$ to distinct nodes $n_s$ and $n_o$, and add them to the MPG node set, such that $n_s, n_o \in N$ \cite{hernandez_reifying_nodate, sadoughi_meta-property_2025}.
+    
+    \item \textbf{Step 2 (Map the Relationship Predicate):} Next, we extract the target of the \texttt{rdf:predicate} triple, representing $p$. We create a new directed edge $e$ in the MPG edge set, such that $e \in E_d$. We use the topology function $\eta$ to assign its endpoints: $\eta_s(e) = n_s$ and $\eta_t(e) = n_o$. Finally, we use the labeling functions $\lambda$ and $\mu$ to map the predicate name to the edge, such that $p \in \mu(\lambda(e))$ \cite{sadoughi_meta-property_2025}.
+    
+    \item \textbf{Step 3 (Create the Meta-Node and Apply $\rho$):} To cleanly map the RDF statement identifier $i$, we create a new meta-node $n_i$ in the MPG node set ($n_i \in N$). Instead of creating structural helper edges (which leads to graph bloat in standard RDF), we use the native $\rho$ (rho) function to encapsulate the base edge into a reified sub-structure by assigning $\rho(n_i) = \{n_s, e, n_o\}$. This formally makes $n_i$ a first-class citizen representing the original relationship \cite{sadoughi_meta-property_2025}.
+    
+    \item \textbf{Step 4 (Attach the Metadata):} Finally, we scan $G_{RDF}$ for any remaining triples where the statement identifier $i$ is the subject, mapping them to $n_i$ depending on their target type:
+    \begin{itemize}
+        \item \textit{For Data Properties} (metadata with literal values $v_d$): We create a new property object $k$ in the property set ($k \in P$). We use the $\upsilon$ (upsilon) function to assign the key-value pair: $\upsilon(k) = (p_d, v_d)$. We then attach this property directly to the meta-node using the $\sigma$ (sigma) function by adding it to the node's compatible property set: $k \in \sigma(n_i)$ \cite{sadoughi_meta-property_2025}.
+        \item \textit{For Object Properties} (metadata pointing to other entities $n_o'$): Because $n_i$ is a recognized structural node in the MPG, we create a new directed edge $e_o \in E_d$. We use the $\eta$ function to define its topology originating from the meta-node: $\eta_s(e_o) = n_i$ and $\eta_t(e_o) = n_o'$. We map the predicate $p_o$ to the edge label such that $p_o \in \mu(\lambda(e_o))$ \cite{sadoughi_meta-property_2025, hogan_knowledge_2022}.
+    \end{itemize}
+\end{itemize}
+
+\end{question}
 
 % Here is your complete, revised outline. It is strictly formatted to answer the Lecture 8 prompt ("Give a direct mapping..."), stripping away unnecessary prose, utilizing the formal mathematical set notations, and applying the exact citations from your sources.
 
@@ -39,5 +106,3 @@
 % *   **Step 4 (Attach the Metadata):** Scan $G_{RDF}$ for any remaining triples where the statement identifier $i$ is the subject, and map them to $n_i$ depending on their target type:
 %     *   **For Data Properties (metadata with literal values $v_d$):** Create a new property object $k$ in the property set ($k \in P$). Use the $\upsilon$ (upsilon) function to assign the key-value pair: $\upsilon(k) = (p_d, v_d)$. Attach this property directly to the meta-node using the $\sigma$ (sigma) function by adding it to the node's compatible property set: $k \in \sigma(n_i)$. 
 %     *   **For Object Properties (metadata pointing to other entities $n_o$):** Because $n_i$ is a recognized structural node in the MPG, create a new directed edge $e_o \in E_d$. Use the $\eta$ function to define its topology originating from the meta-node: $\eta_s(e_o) = n_i$ and $\eta_t(e_o) = n_o$. Map the predicate $p_o$ to the edge label such that $p_o \in \mu(\lambda(e_o))$. (Sadoughi et al. - Meta-Property Graphs: Extending Property Graphs with Metadata Awareness and Reification; Hogan et al. - Knowledge Graphs)
-
-\end{question}
