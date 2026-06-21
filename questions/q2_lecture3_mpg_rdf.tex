@@ -5,29 +5,29 @@
 
 \begin{question}{2}{3}{Converting between RDF and MPG reification}
 
-\questionbrief
-  {%
-    Sadoughi et al.\ have recently introduced \emph{Meta-Property Graphs}
-    (MPG), a practical extension of Property Graphs. Give procedures for
-    converting between reification in RDF data and reification in MPG data
-    (\textbf{both directions}). Present your procedures in a self-contained,
-    stand-alone write-up of your investigation.%
-  }
-  {%
-    Primary: Sadoughi, Yakovets \& Fletcher, \emph{Breaking down the
-    data-metadata barrier for effective Property Graph data management},
-    EDBT 2025. Useful background: Guarino, Sales \& Guizzardi,
-    \emph{Reification and Truthmaking Patterns} (ER 2018);
-    Hogan et al., \emph{Knowledge graphs} (\S3.2).%
-  }
-  {%
-    70\% quality and motivation/analysis of the proposal;
-    30\% writing quality/clarity/completeness.
-    Minimum length: \textbf{2 A4 full pages}
-    (margins comparable to \texttt{\textbackslash usepackage\{fullpage\}}).%
-  }
+% \questionbrief
+%   {%
+%     Sadoughi et al.\ have recently introduced \emph{Meta-Property Graphs}
+%     (MPG), a practical extension of Property Graphs. Give procedures for
+%     converting between reification in RDF data and reification in MPG data
+%     (\textbf{both directions}). Present your procedures in a self-contained,
+%     stand-alone write-up of your investigation.%
+%   }
+%   {%
+%     Primary: Sadoughi, Yakovets \& Fletcher, \emph{Breaking down the
+%     data-metadata barrier for effective Property Graph data management},
+%     EDBT 2025. Useful background: Guarino, Sales \& Guizzardi,
+%     \emph{Reification and Truthmaking Patterns} (ER 2018);
+%     Hogan et al., \emph{Knowledge graphs} (\S3.2).%
+%   }
+%   {%
+%     70\% quality and motivation/analysis of the proposal;
+%     30\% writing quality/clarity/completeness.
+%     Minimum length: \textbf{2 A4 full pages}
+%     (margins comparable to \texttt{\textbackslash usepackage\{fullpage\}}).%
+%   }
 
-\section{Converting between RDF and MPG reification}
+% \section{Converting between RDF and MPG reification}
 % --- Your answer below -------------------------------------------------------
 
 % TODO:
@@ -39,12 +39,210 @@
 % NOTE: keep this answer substantively different from Question 3 (L8).
 % L8 asks for a one-direction direct mapping; here you must cover BOTH
 % directions and justify the design choices, not just exhibit a mapping.
+\section{Converting between RDF and MPG reification}
 \subsection{Theoretical Foundation \& Problem Statement}
 
-Knowledge Graphs 
+Standard RDF reification results in massive graph bloat, severe query complexity, performance degradation, costly structural disruption, and a loss of intuitive data modeling \cite{hernandez_reifying_nodate}. While standard Property Graphs elegantly handle weak truthmakers (simple metadata) natively as edge properties, they face severe limitations when a relationship itself acts as a strong truthmaker that must be referenced by another entity \cite{guarino_reification_2018}. 
+
+To understand this challenge in more detail, lets take a football database example. If we want to extend a graph that says ``Netherlands BEAT Sweden 5-1'' by including the 2026 World Cup as a distinct entity that must point directly to that specific match, the match relationship itself becomes a strong truthmaker \cite{guarino_reification_2018}. It needs to be referenced without disrupting the existing graph structure.
+
+Meta-Property Graphs (MPGs) solve this exact problem by breaking down the data-metadata barrier and natively allowing sub-structures to be referenced as first-class citizens \cite{sadoughi_meta-property_2025}. In standard RDF reification, structural nodes are defined with \texttt{rdf:Statement}, \texttt{rdf:subject}, \texttt{rdf:predicate}, and \texttt{rdf:object} \cite{cyganiak_rdf_2014}. In contrast, MPG reification makes metadata a first-class citizen using the mathematical $\rho$ function to encapsulate a full sub-structure into a meta-node, which can be natively queried using the \texttt{::} operator \cite{sadoughi_meta-property_2025}.
 
 \subsection{RDF to MPG reification}
 
+A bit more practical scenario is performing the actual conversion. For our example context: ``In the 2026 Football World Cup, Netherlands beat Sweden, 5-1.'' The RDF input contains a \texttt{match\_node} of type \texttt{rdf:Statement}, linked via \texttt{rdf:subject} to Netherlands, \texttt{rdf:predicate} to BEAT, and \texttt{rdf:object} to Sweden. It also holds a score property of "5-1" and has an incoming \texttt{includes} edge from the \texttt{2026\_World\_Cup} node \cite{hernandez_reifying_nodate}.
+
+The procedure to convert this RDF reification into MPG is as follows:
+\begin{itemize}
+    \item \textbf{Step 1 (Identify)}: Scan the RDF data to locate any node explicitly typed as an \texttt{rdf:Statement} \cite{hernandez_reifying_nodate}.
+    \item \textbf{Step 2 (Extract Base Structure)}: Identify the targets of the statement's subject, predicate, and object triples and recreate the base structure in the MPG by drawing a direct \texttt{BEAT} edge between the Netherlands and Sweden nodes \cite{sadoughi_meta-property_2025}.
+    \item \textbf{Step 3 (Encapsulate)}: Create an MPG meta-node and use the $\rho$ function to encapsulate that base \texttt{BEAT} edge into a sub-structure \cite{sadoughi_meta-property_2025}.
+    \item \textbf{Step 4 (Migrate Connections and Properties)}: Translate the score triple into a native key-value property directly on the new meta-node, and translate the \texttt{includes} triple into an edge originating from the \texttt{2026\_World\_Cup} node pointing directly to the meta-node \cite{sadoughi_meta-property_2025}.
+\end{itemize}
+
+This thought process resulted in the MPG structure seen in Figure \ref{fig:mpg_conversion}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    >=stealth,
+    node distance=4cm,
+    pgnode/.style={
+        rectangle split,
+        rectangle split parts=2,
+        draw=black,
+        thick,
+        rounded corners,
+        fill=orange!10,
+        align=left,
+        font=\small\sffamily,
+        inner sep=6pt
+    },
+    metanode/.style={
+        draw=blue!80,
+        thick,
+        dashed,
+        rounded corners,
+        fill=blue!5,
+        align=left,
+        font=\small\sffamily,
+        inner sep=6pt
+    },
+    edgeprop/.style={
+        fill=white,
+        font=\scriptsize\sffamily,
+        inner sep=2pt,
+        draw=gray!50,
+        rounded corners=2pt
+    }
+]
+
+    % Base Nodes
+    \node[pgnode] (netherlands) {
+        \textbf{:FootballTeam}
+        \nodepart{second}
+        country: "Netherlands"
+    };
+    \node[pgnode, right=3.5cm of netherlands] (sweden) {
+        \textbf{:FootballTeam}
+        \nodepart{second}
+        country: "Sweden"
+    };
+
+    % Base Edge
+    \draw[->, thick] (netherlands) -- (sweden) 
+        node[midway, edgeprop, align=center] (beat) {\textbf{BEAT}};
+
+    % Meta Node (encapsulating the edge conceptually)
+    \node[metanode, below=1.5cm of beat] (match) {
+        \textbf{:MetaNode} ($\rho$)
+        \\ score: "5-1"
+    };
+    \draw[->, dashed, thick, blue] (match) -- (beat) node[midway, right, font=\scriptsize] {encapsulates};
+
+    % World Cup Node
+    \node[pgnode, left=2.5cm of match] (worldcup) {
+        \textbf{:Tournament}
+        \nodepart{second}
+        year: 2026
+    };
+
+    % Edge to Meta Node
+    \draw[->, thick] (worldcup) -- (match) 
+        node[midway, edgeprop, align=center] {\textbf{INCLUDES}};
+
+\end{tikzpicture}
+\caption{MPG Reification for the World Cup match, treating the relationship as a first-class citizen.}
+\label{fig:mpg_conversion}
+\end{figure}
+
 \subsection{MPG to RDF reification}
+
+When mapping backwards from MPG to standard RDF, the procedure reverses the encapsulation back into structural triples:
+\begin{itemize}
+    \item \textbf{Step 1 (Identify)}: Scan the MPG specifically to find any meta-nodes that utilize the $\rho$ function to encapsulate an underlying sub-structure \cite{sadoughi_meta-property_2025}.
+    \item \textbf{Step 2 (Fragment into Triples)}: Take the encapsulated source, target, and edge from the sub-structure, and map them respectively to standard RDF \texttt{rdf:subject}, \texttt{rdf:predicate}, and \texttt{rdf:object} triples \cite{hernandez_reifying_nodate}.
+    \item \textbf{Step 3 (Generate \texttt{rdf:Statement})}: Create a new blank node or IRI in the RDF graph to act as the central hub for these triples, explicitly typing it as an \texttt{rdf:Statement} \cite{cyganiak_rdf_2014}.
+    \item \textbf{Step 4 (Unpack)}: For any native properties (like score) or incoming/outgoing edges (like \texttt{includes}) attached to the MPG meta-node, generate standard RDF triples where the new \texttt{rdf:Statement} node serves as either the subject or the object \cite{hernandez_reifying_nodate}.
+\end{itemize}
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    >=stealth,
+    node distance=3.5cm,
+    pgnode/.style={
+        rectangle split,
+        rectangle split parts=2,
+        draw=black,
+        thick,
+        rounded corners,
+        fill=orange!10,
+        align=left,
+        font=\small\sffamily,
+        inner sep=6pt
+    },
+    stmtnode/.style={
+        rectangle split,
+        rectangle split parts=2,
+        draw=red!80,
+        thick,
+        rounded corners,
+        fill=red!5,
+        align=left,
+        font=\small\sffamily,
+        inner sep=6pt
+    },
+    edgeprop/.style={
+        fill=white,
+        font=\scriptsize\sffamily,
+        inner sep=2pt,
+        draw=gray!50,
+        rounded corners=2pt
+    }
+]
+
+    % Central Statement Node
+    \node[stmtnode] (stmt) {
+        \textbf{\_:match\_node}
+        \nodepart{second}
+        type: "rdf:Statement"
+    };
+
+    % Subject and Object Nodes
+    \node[pgnode, left=3.5cm of stmt] (netherlands) {
+        \textbf{:FootballTeam}
+        \nodepart{second}
+        country: "Netherlands"
+    };
+    \node[pgnode, right=3.5cm of stmt] (sweden) {
+        \textbf{:FootballTeam}
+        \nodepart{second}
+        country: "Sweden"
+    };
+
+    % Predicate and Metadata Nodes
+    \node[pgnode, above=2cm of stmt] (predicate) {
+        \textbf{:Property}
+        \nodepart{second}
+        uri: "BEAT"
+    };
+    
+    \node[pgnode, below=2cm of stmt] (score) {
+        \textbf{:Literal}
+        \nodepart{second}
+        value: "5-1"
+    };
+
+    % World Cup Context Node
+    \node[pgnode, above left=1.5cm and 2.5cm of stmt] (worldcup) {
+        \textbf{:Tournament}
+        \nodepart{second}
+        year: 2026
+    };
+
+    % RDF Structural Edges
+    \draw[->, thick] (stmt) -- (netherlands) 
+        node[midway, edgeprop, align=center] {\textbf{rdf:subject}};
+    \draw[->, thick] (stmt) -- (sweden) 
+        node[midway, edgeprop, align=center] {\textbf{rdf:object}};
+    \draw[->, thick] (stmt) -- (predicate) 
+        node[midway, edgeprop, align=center] {\textbf{rdf:predicate}};
+
+    % Metadata Edges
+    \draw[->, thick] (stmt) -- (score) 
+        node[midway, edgeprop, align=center] {\textbf{score}};
+    \draw[->, thick] (worldcup) -- (stmt) 
+        node[midway, edgeprop, align=center] {\textbf{INCLUDES}};
+
+\end{tikzpicture}
+\caption{Standard RDF Reification: The relationship explodes into a central \texttt{rdf:Statement} hub with structural edges, resulting in graph bloat.}
+\label{fig:rdf_reification}
+\end{figure}
+
+\subsection{Conclusion}
+
+MPGs natively solve the problem of reification found in standard RDFs by seamlessly encapsulating relationships without causing structural graph bloat or multi-hop query degradation \cite{sadoughi_meta-property_2025, hernandez_reifying_nodate}. 
+
+However, despite their theoretical elegance in tackling these limitations, MPGs face challenges related to their current immaturity as a proposed model \cite{sadoughi_meta-property_2025}. The biggest practical gaps preventing immediate industry adoption include the physical implementation and storage overhead required to index first-class properties, as well as the lack of dedicated schema and constraint languages built on top of \texttt{PG-SCHEMA} standards \cite{sadoughi_meta-property_2025}.
 
 \end{question}
