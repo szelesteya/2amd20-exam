@@ -1,0 +1,40 @@
+\begin{question}{4}{5}{Solving knowledge gap bridge with relational database}
+
+% \questionbrief
+%   {%
+%     Consider again the E-commerce use case of Sequeda et al. discussed in 
+% this lecture. In this use case, the gap between the data producers and data 
+% consumers was bridged using a knowledge graph. Is it possible to bridge 
+% this gap using a relational database instead of a knowledge graph? Provide 
+% arguments that support your answer.%
+%   }
+%   {%
+%     Sequede et al. \cite{sequeda_pay-as-you-go_2019}%
+%   }
+%   {%
+%     Grading: 70\% for quality and and depth of your analysis, 30\% for quality/
+%     clarity/completeness of writing.  Your answer to this question should be at 
+%     least one A4 fullpages, i.e., page margins equivalent to%
+%   }
+\section{Solving knowledge gap bridge with relational database}
+
+\subsection{Introduction}
+
+Yes, you can close the knowledge gap in other names data-meaning gap in the discusses E-Commerce use case with Relational Database and no Knowledge Graphs. In more detail the procedure can be done utilizing relational database mappings in other names Ontology-Based Data Access (ODBA) \cite{poggi_linking_2008} methods. This is done by following the same process proposed by \citet{sequeda_pay-as-you-go_2019} but replacing the underlying knowledge graph architecture with an equivalent ODBA system.
+To fully understand the question, it is important to have clear definition of data-meaning gap: based on \citet{sequeda_pay-as-you-go_2019} data-meaning gap occurs when data consumers cannot answer there own questions without heavy IT support. It is also essential to have a shared understanding of relational databases, so here it will be defined as database architectures organizing their data in tables with strict schemes \cite{codd_relational_1970}.
+
+\subsection{Premises}
+
+As \citet{sequeda_pay-as-you-go_2019} proved in their work the data-meaning gap can be closed with the usage of the \textit{Pay-as-you-go} Knowledge Graph creation procedure. They proved it by implementing it in real commercial cases where they observed satisfactory results.
+
+It is important to note that the real gap is human not technical. The step that explicitly depends on knowledge graphs is the . Where you can replace the underlying knowledge graph with in its expressiveness equal relational database. This is best done via ODBA methods \cite{poggi_linking_2008} with which we can keep the rich expressiveness of KGs, but effectively rely on relational databases. Ontology-Based Data Access (OBDA) is a method that allows users to query pre-existing, complex databases using a simplified, high-level conceptual vocabulary (an ontology) rather than the database's underlying technical schema.
+
+In short Knowledge Graph is just the architecture that might happen to be more efficient in few cases and make future work more consistent and flexible, but the same can be achieved through relational databases \cite{sakr_relational_2010}) we would get by solving phase 3. Actually, many knowledge graphs are implemented with relational databases.
+A valid concern here is that the main advantage of knowledge graphs is their flexibility, which in fact is lost partly with ontology based methods.
+
+\subsection{Conclusion}
+
+In conclusion, as pay-as-you go solves the data-meaning gap and we can create an equivalent method with relational databases it is proven that the data-meaning gap could be solved with only relational databases and no knowledge graphs. Consequently, the architecture of the database in most knowledge gap problems is not the most concerning problem, but rather defining the mediator ontology that satisfies most requirements.
+
+% --- Your answer below -------------------------------------------------------
+\end{question}
